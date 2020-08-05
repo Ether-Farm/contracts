@@ -1,0 +1,27 @@
+{
+  "name": "metacoin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.1.0",
+    "solidity-coverage": "^0.7.9"
+  },
+  "devDependencies": {
+    "eth-gas-reporter": "^0.2.17",
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/test-helpers": "^0.5.6",
+    "@truffle/hdwallet-provider": "^1.0.40",
+    "dotenv": "^8.2.0",
+    "truffle-plugin-verify": "^0.3.11"
+  },
+  "scripts": {
+    "coverage": "npx truffle run coverage",
+    "test": "npx truffle test"
+  },
+  "author": "",
+  "license": "ISC"
+}
