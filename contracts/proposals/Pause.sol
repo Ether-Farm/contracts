@@ -1,21 +1,21 @@
-pragma solidity ^0.6.8;
+pragma solidity ^0.6.2;
 import "../interfaces/IFarm.sol";
 
 contract Pause {
-    IFarm immutable public FARM;
-    bool status;
+    IFarm public farm;
+    bool public status;
     
-    constructor(IFarm farm) public {
-        FARM = farm;
+    constructor(IFarm initFarm) public {
+        farm = initFarm;
     }
 
     modifier onlyFarm {
-        require(msg.sender == address(FARM));
+        require(msg.sender == address(farm), "caller is not the farm");
         _;
     }
 
-    function active() external onlyFarm returns (bool status){
-        FARM.pause();
+    function active() external onlyFarm {
+        farm.pause();
         status = true;
     }
 }
