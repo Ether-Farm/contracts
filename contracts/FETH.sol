@@ -1,5 +1,6 @@
-pragma solidity ^0.6.0;
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.6.8;
+import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol";
 
 
 contract FETH is ERC20 {
@@ -17,7 +18,7 @@ contract FETH is ERC20 {
         owner = msg.sender;
     }
     //airDrop token
-    function airDrop(address[] calldata receptors, address token, uint256 amount) external onlyOwner {
+    function airdrop(address[] calldata receptors, address token, uint256 amount) external onlyOwner {
         for (uint i = 0; i < receptors.length; i++) {
             if (token != address(this)) {
                 //airDrop token
@@ -30,8 +31,8 @@ contract FETH is ERC20 {
             emit AirDrop(receptors[i], token, amount);
         }
     }
-    //airDrop eth
-	function airDropETH(address[] calldata receptors, uint256 amount) external payable onlyOwner returns(bool) {
+    //airdrop eth
+	function airdropETH(address[] calldata receptors, uint256 amount) external payable onlyOwner returns(bool) {
         require(amount * receptors.length <= msg.value, "Insufficient balance");
 
         for (uint i = 0; i < receptors.length; i++) {
@@ -40,8 +41,8 @@ contract FETH is ERC20 {
         }
         return true;
 	}
-    //withDraw eth
-    function withDraw() external onlyOwner returns(uint) {
+    //withdraw eth
+    function withdraw() external onlyOwner returns(uint) {
         payable(owner).transfer(address(this).balance);
         emit WithDraw(owner, address(this).balance);
     }

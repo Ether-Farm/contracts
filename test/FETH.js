@@ -27,7 +27,7 @@ contract('FETH', function (accounts) {
     it('airdrop XToken to receptors', async function () {
         const receptors = [receptor1, receptor2, receptor3];
         await this.XToken.approve(this.FETH.address, web3.utils.toWei('30', 'ether'), {from: owner});
-        await this.FETH.airDrop(receptors, this.XToken.address, web3.utils.toWei('10', 'ether'), {from: owner});
+        await this.FETH.airdrop(receptors, this.XToken.address, web3.utils.toWei('10', 'ether'), {from: owner});
 
         for(let i = 0; i < receptors.length; i++) {
             expect(await this.XToken.balanceOf(receptors[i])).to.be.bignumber.equal(web3.utils.toWei('10', 'ether'));
@@ -39,7 +39,7 @@ contract('FETH', function (accounts) {
     })
     it('airdrop FETH to receptors', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await this.FETH.airDrop(receptors, this.FETH.address, web3.utils.toWei('1', 'ether'), {from: owner});
+        await this.FETH.airdrop(receptors, this.FETH.address, web3.utils.toWei('1', 'ether'), {from: owner});
 
         for(let i = 0; i < receptors.length; i++) {
             expect(await this.FETH.balanceOf(receptors[i]))
@@ -49,12 +49,12 @@ contract('FETH', function (accounts) {
     })
     it('none owner can not airdrop FETH to receptors', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await expectRevert(this.FETH.airDrop(receptors, this.FETH.address, web3.utils.toWei('1', 'ether'), {from: other}), 'Ownable: caller is not the owner');
+        await expectRevert(this.FETH.airdrop(receptors, this.FETH.address, web3.utils.toWei('1', 'ether'), {from: other}), 'Ownable: caller is not the owner');
     })
 
     it('airdrop ETH to receptors', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await this.FETH.airDropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei(receptors.length.toString(), 'ether')});
+        await this.FETH.airdropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei(receptors.length.toString(), 'ether')});
 
         for(let i = 0; i < receptors.length; i++) {
             expect(await web3.eth.getBalance(receptors[i]))
@@ -65,12 +65,12 @@ contract('FETH', function (accounts) {
 
     it('none owner can not airdrop ETH to receptors', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await expectRevert(this.FETH.airDropETH(receptors, web3.utils.toWei('1', 'ether'), {from: other, value: web3.utils.toWei(receptors.length.toString(), 'ether')}), 'Ownable: caller is not the owner');
+        await expectRevert(this.FETH.airdropETH(receptors, web3.utils.toWei('1', 'ether'), {from: other, value: web3.utils.toWei(receptors.length.toString(), 'ether')}), 'Ownable: caller is not the owner');
     })
 
-    it('with ETH', async function () {
+    it('withdraw ETH', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await this.FETH.airDropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei('5', 'ether')});
+        await this.FETH.airdropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei('5', 'ether')});
 
         for(let i = 0; i < receptors.length; i++) {
             expect(await web3.eth.getBalance(receptors[i]))
@@ -88,9 +88,9 @@ contract('FETH', function (accounts) {
             .equal(web3.utils.toWei('0', 'ether'));
     })
 
-    it('none owner can not with ETH', async function () {
+    it('none owner can not withdraw ETH', async function () {
         const receptors = [receptor1, receptor2, receptor3];
-        await this.FETH.airDropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei('5', 'ether')});
+        await this.FETH.airdropETH(receptors, web3.utils.toWei('1', 'ether'), {from: owner, value: web3.utils.toWei('5', 'ether')});
 
         for(let i = 0; i < receptors.length; i++) {
             expect(await web3.eth.getBalance(receptors[i]))
