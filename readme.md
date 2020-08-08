@@ -14,6 +14,9 @@ CompoundDeposit: 0x810c3Fd4F95C56D26280e682072ed37B59114229
 
 cETH: 0xbe839b6d93e3ea47effcca1f27841c917a8794f3
 
+## Teset report
+![](./coverage/testreport.jpg)
+
 ## Farm function
 
 ### 1. 投票通过提案 
