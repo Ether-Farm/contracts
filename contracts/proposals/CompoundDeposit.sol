@@ -1,14 +1,18 @@
 pragma solidity ^0.6.2;
+
 import "../interfaces/IFarm.sol";
+import "../interfaces/ICompound.sol";
 
 contract CompoundDeposit {
     IFarm public farm;
     bool public status;
-    uint256 public investETH = 1e16;
-    // address public cETH = address("0xbe839b6d93e3ea47effcca1f27841c917a8794f3");
+    string public SUMMARY = "proposal for deposit to compound"; 
+    uint256 public INVEST_ETH = 11e15;
+    ICompound public cETH;
 
-    constructor(IFarm initFarm) public {
+    constructor(IFarm initFarm, ICompound initCETH) public {
         farm = initFarm;
+        cETH = initCETH;
     }
 
     modifier onlyFarm {
@@ -18,6 +22,8 @@ contract CompoundDeposit {
 
     function active() external onlyFarm {
         // farm.unpause();
+        cETH.mint.value(INVEST_ETH)();
         status = true;
     }
+    receive() external payable {}
 }

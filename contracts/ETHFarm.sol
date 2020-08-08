@@ -76,9 +76,8 @@ contract ETHFarm is ReentrancyGuard, Pausable {
     //TODO get share amount out
     //TODO vot
     //TODO start and stop
-    function vote(address proposal) external returns (bool status, uint256 votes) {
+    function vote(address proposal) external nonReentrant returns (bool status, uint256 votes) {
         //TODO get proposal info
-
         //TODO save info
         require(!proposals[proposal].status, "proposal signed");
         require(proposals[proposal].votes == 0 || proposals[proposal].expired > block.number, "proposal expired");

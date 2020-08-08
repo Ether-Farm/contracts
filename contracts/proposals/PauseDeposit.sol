@@ -4,7 +4,9 @@ import "../interfaces/IFarm.sol";
 contract PauseDeposit {
     IFarm public farm;
     bool public status;
-    
+    string public SUMMARY = "proposal for pause farm deposit"; 
+    uint256 public INVEST_ETH = 0;
+
     constructor(IFarm initFarm) public {
         farm = initFarm;
     }

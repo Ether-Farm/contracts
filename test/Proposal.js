@@ -13,6 +13,8 @@ const VOT = artifacts.require('Vot');
 const ETHFarm = artifacts.require('ETHFarm');
 const Pause = artifacts.require('PauseDeposit');
 const Open = artifacts.require('OpenDeposit');
+const Compound = artifacts.require('CompoundDeposit');
+const MockCETH = artifacts.require('MockCETH');
 
 contract('Proposal', function (accounts) {
     const [owner, other, farm, receptor1, receptor2, receptor3, proposal1] =  accounts;
@@ -34,10 +36,20 @@ contract('Proposal', function (accounts) {
             const receipt = await this.ETHFarm.deposit(web3.utils.toWei('1', 'ether'), {from: receptors[i]});
             expect(await this.VOT.balanceOf(receptors[i])).to.be.bignumber.equal(web3.utils.toWei('1', 'ether'));
         }
-
         this.Pause = await Pause.new(this.ETHFarm.address, {from: owner});
         this.Open = await Open.new(this.ETHFarm.address, {from: owner});
+
+        this.MockCETH = await MockCETH.new({from: owner});
+        this.Compound = await Compound.new(this.ETHFarm.address, this.MockCETH.address,{from: owner});
+
         expect(await this.Pause.farm()).to.equal(this.ETHFarm.address);
+        expect(await this.Open.farm()).to.equal(this.ETHFarm.address);
+        expect(await this.Compound.farm()).to.equal(this.ETHFarm.address);
+
+        expect(await this.Pause.SUMMARY()).to.equal('proposal for pause farm deposit');
+        expect(await this.Open.SUMMARY()).to.equal('proposal for open farm deposit');
+        expect(await this.Compound.SUMMARY()).to.equal('proposal for deposit to compound');
+        await this.Compound.send(web3.utils.toWei("0.011","ether"), { from: owner });
     })
     describe('pause deposit proposal', function() {
 
@@ -92,6 +104,14 @@ contract('Proposal', function (accounts) {
 
     })
 
+    describe('compound proposal', function() {
+        it('should deposit eth to compound', async function () {
+            await this.ETHFarm.vote(this.Compound.address, {from: receptor1});
+            await this.ETHFarm.vote(this.Compound.address, {from: receptor2});
+            expect(await this.MockCETH.balanceOf(this.Compound.address)).to.be.bignumber.equal(web3.utils.toWei("0.01","ether"));
+        })
+ 
+    })
 
  
 })
