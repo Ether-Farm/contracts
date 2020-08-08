@@ -21,6 +21,7 @@ module.exports = {
     provider: () => new HDWalletProvider(process.env.DEV_MNEMONIC, "https://ropsten.infura.io/v3/" + infuraProjectId),
     network_id: 3,       // Ropsten's id
     gas: 8000000,
+    gasPrice: 40000000000,
    },
    rinkeby: {
     provider: () => new HDWalletProvider(process.env.DEV_MNEMONIC, "https://rinkeby.infura.io/v3/" + infuraProjectId),

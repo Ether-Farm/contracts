@@ -72,6 +72,11 @@
               "internalType": "uint256",
               "name": "expired",
               "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "unactive",
+              "type": "bool"
             }
           ],
           "indexed": false,
@@ -129,6 +134,165 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "proposal",
+          "type": "address"
+        }
+      ],
+      "name": "closeCompound",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountFETH",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "liquidity",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "currentRate",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMoneyBagByIndex",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "bag",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "proposal",
+          "type": "address"
+        }
+      ],
+      "name": "getProposal",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "status",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "votes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expired",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProposalByIndex",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "proposal",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "status",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "votes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expired",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getProposalNumber",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "length",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "moneyBag",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "owner",
       "outputs": [
@@ -139,6 +303,13 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -197,6 +368,11 @@
           "internalType": "uint256",
           "name": "expired",
           "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "unactive",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -205,52 +381,21 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "amountFETH",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "proposal",
+          "type": "address"
         }
       ],
-      "name": "deposit",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "liquidity",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "amountVOT",
-          "type": "uint256"
-        }
-      ],
-      "name": "withdraw",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "ethAmount",
-          "type": "uint256"
-        }
-      ],
+      "name": "unActiveVot",
+      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "getCurrentRate",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "currentRate",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -278,93 +423,26 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "getProposalNumber",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "length",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "index",
+          "name": "amountVOT",
           "type": "uint256"
         }
       ],
-      "name": "getProposalByIndex",
+      "name": "withdraw",
       "outputs": [
         {
-          "internalType": "address",
-          "name": "proposal",
-          "type": "address"
-        },
-        {
-          "internalType": "bool",
-          "name": "status",
-          "type": "bool"
-        },
-        {
           "internalType": "uint256",
-          "name": "votes",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "expired",
+          "name": "withdrawAmount",
           "type": "uint256"
         }
       ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "proposal",
-          "type": "address"
-        }
-      ],
-      "name": "getProposal",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "status",
-          "type": "bool"
-        },
-        {
-          "internalType": "uint256",
-          "name": "votes",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "expired",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "pause",
-      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "unpause",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      "stateMutability": "payable",
+      "type": "receive"
     }
-  ]
+  ],

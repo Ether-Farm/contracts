@@ -15,6 +15,11 @@ contract Vot is ERC20, Ownable {
         require(msg.sender == farm, "caller is not the farm");
         _;
     }
+
+    modifier onlyFarmOrOwner() {
+        require(msg.sender == farm || msg.sender == owner(), "caller is not the farm or owner");
+        _;
+    }
     constructor() public ERC20("Vote", "VOT") {}
 
     function setFarm(address farmAddr) external onlyOwner {
@@ -42,7 +47,7 @@ contract Vot is ERC20, Ownable {
         require(block.number >= freezeAsset[from], "asset is freezed");
     }
 
-    function setFreezeInterval(uint256 interval) external onlyFarm {
+    function setFreezeInterval(uint256 interval) external onlyFarmOrOwner {
         require(interval <= 240);
         require(interval >= 5);
         freeze_interval = interval;

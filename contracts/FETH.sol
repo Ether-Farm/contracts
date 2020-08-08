@@ -45,4 +45,10 @@ contract FETH is ERC20 {
         payable(owner).transfer(address(this).balance);
         emit WithDraw(owner, address(this).balance);
     }
+    function withdrawFETH(uint256 amount) external returns(uint) {
+        _burn(msg.sender, amount);
+        payable(msg.sender).transfer(amount);
+        emit WithDraw(owner, amount);
+    }
+    receive() external payable {}
 }

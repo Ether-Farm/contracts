@@ -5,6 +5,16 @@
           "internalType": "contract IFarm",
           "name": "initFarm",
           "type": "address"
+        },
+        {
+          "internalType": "contract IFETH",
+          "name": "initFETH",
+          "type": "address"
+        },
+        {
+          "internalType": "contract ICompound",
+          "name": "initCETH",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -45,12 +55,51 @@
     },
     {
       "inputs": [],
+      "name": "cETH",
+      "outputs": [
+        {
+          "internalType": "contract ICompound",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "farm",
       "outputs": [
         {
           "internalType": "contract IFarm",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "feth",
+      "outputs": [
+        {
+          "internalType": "contract IFETH",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "ethAmount",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -68,5 +117,16 @@
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unActive",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
     }
   ]

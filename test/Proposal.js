@@ -25,11 +25,12 @@ contract('Proposal', function (accounts) {
         this.VOT = await VOT.new({from: owner});
         this.ETHFarm = await ETHFarm.new(this.FETH.address, this.VOT.address, {from: owner});
 
+        await this.FETH.send(web3.utils.toWei("0.011","ether"), { from: owner });
         await this.VOT.setFarm(this.ETHFarm.address, {from: owner});
         expect(await this.VOT.farm()).to.equal(this.ETHFarm.address);
 
         const receptors = [receptor1, receptor2, receptor3];
-        await this.FETH.airdrop(receptors, this.FETH.address, web3.utils.toWei('1', 'ether'), {from: owner});
+        await this.FETH.airdrop(receptors, this.FETH.address, web3.utils.toWei('2', 'ether'), {from: owner});
 
         for (let i = 0; i < receptors.length; i++) {
             await this.FETH.approve(this.ETHFarm.address, web3.utils.toWei('1', 'ether'), {from: receptors[i]})
@@ -40,7 +41,7 @@ contract('Proposal', function (accounts) {
         this.Open = await Open.new(this.ETHFarm.address, {from: owner});
 
         this.MockCETH = await MockCETH.new({from: owner});
-        this.Compound = await Compound.new(this.ETHFarm.address, this.MockCETH.address,{from: owner});
+        this.Compound = await Compound.new(this.ETHFarm.address, this.FETH.address, this.MockCETH.address,{from: owner});
 
         expect(await this.Pause.farm()).to.equal(this.ETHFarm.address);
         expect(await this.Open.farm()).to.equal(this.ETHFarm.address);
@@ -49,7 +50,7 @@ contract('Proposal', function (accounts) {
         expect(await this.Pause.SUMMARY()).to.equal('proposal for pause farm deposit');
         expect(await this.Open.SUMMARY()).to.equal('proposal for open farm deposit');
         expect(await this.Compound.SUMMARY()).to.equal('proposal for deposit to compound');
-        await this.Compound.send(web3.utils.toWei("0.011","ether"), { from: owner });
+        // await this.Compound.send(web3.utils.toWei("0.011","ether"), { from: owner });
     })
     describe('pause deposit proposal', function() {
 
@@ -107,10 +108,43 @@ contract('Proposal', function (accounts) {
     describe('compound proposal', function() {
         it('should deposit eth to compound', async function () {
             await this.ETHFarm.vote(this.Compound.address, {from: receptor1});
+            await expectRevert(this.ETHFarm.vote(this.Compound.address, {from: receptor1}), 'asset is freezed');
             await this.ETHFarm.vote(this.Compound.address, {from: receptor2});
-            expect(await this.MockCETH.balanceOf(this.Compound.address)).to.be.bignumber.equal(web3.utils.toWei("0.01","ether"));
+            expect(await this.MockCETH.balanceOf(this.Compound.address)).to.be.bignumber.equal('54909636');
+            
+            let balance = await this.Compound.getBalance(); 
+            expect(balance).to.be.bignumber.equal(new BN('10999999824457598'));
+
+            await this.FETH.approve(this.ETHFarm.address, web3.utils.toWei('1', 'ether'), {from: receptor3})
+            await this.ETHFarm.deposit(web3.utils.toWei('1', 'ether'), {from: receptor3});
+
+            // await this.Compound.unActive();
+            // expect(await web3.eth.getBalance(this.Compound.address)).to.be.bignumber.equal(new BN('10999999824457598'));
+
         })
  
+        it('close compound deposit proposal', async function () {
+
+            await this.ETHFarm.vote(this.Compound.address, {from: receptor1});
+            await this.ETHFarm.vote(this.Compound.address, {from: receptor2});
+
+            expect(await this.MockCETH.balanceOf(this.Compound.address)).to.be.bignumber.equal('54909636');
+            
+            let balance = await this.Compound.getBalance(); 
+            expect(balance).to.be.bignumber.equal(new BN('10999999824457598'));
+
+            let latestBlock = await time.latestBlock();
+            await time.advanceBlockTo(latestBlock.add(new BN('120')));
+
+            // await this.ETHFarm.closeCompound(this.Compound.address, {from: receptor1});
+
+            await this.ETHFarm.unActiveVot(this.Compound.address, {from: receptor1});
+            await this.ETHFarm.unActiveVot(this.Compound.address, {from: receptor2});
+
+            expect(await web3.eth.getBalance(this.ETHFarm.address)).to.be.bignumber.equal(new BN('10999999824457598'));
+            expect(await this.MockCETH.balanceOf(this.Compound.address)).to.be.bignumber.equal('0');
+ 
+        })
     })
 
  

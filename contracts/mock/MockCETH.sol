@@ -5,10 +5,10 @@ contract MockCETH is ERC20 {
     
     using SafeMath for uint256;
 
-    uint256 rate = 11e17;
+    uint256 public rate = 200329133933024042650566639;
 
     constructor() public ERC20('Compound Ether', 'cETH') {
-
+        _setupDecimals(8);
 	}
     // function liquidateBorrow(address _borrower, address _cTokenCollateral) external payable {
     //     require(msg.value != 0);
@@ -17,11 +17,13 @@ contract MockCETH is ERC20 {
     function mint() external payable {
         _mint(msg.sender, msg.value.mul(1e18).div(rate));
     }
-    // function redeem(uint redeemTokens) external returns (uint) {
-    //     // IERC20(address(this)).transferFrom(msg.sender, address(this), redeemTokens);
-    //     _burn(msg.sender, redeemTokens);
-    //     msg.sender.transfer(redeemTokens.mul(rate).div(1e18));
-    //     return 0;
-    // }
+    function exchangeRateStored() public view returns (uint256 currentRate) {
+        currentRate = rate;
+    }
+    function redeem(uint redeemAmount) external returns (uint) {
+        _burn(msg.sender, redeemAmount);
+        msg.sender.transfer(redeemAmount.mul(rate).div(1e18));
+        return 0;
+    }
     // function () external payable {}
 }
