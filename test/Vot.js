@@ -70,7 +70,7 @@ contract('VOT', function (accounts) {
     })
     
     it('unfreeze and can transfer', async function () {
-        await this.VOT.setFreezeInterval(10, {from: farm});
+        // await this.VOT.setFreezeInterval(10, {from: farm});
 
         //mint VOT 
         await this.VOT.mint(other, web3.utils.toWei('30', 'ether'), {from: farm});
@@ -81,8 +81,8 @@ contract('VOT', function (accounts) {
         await this.VOT.freeze(other, {from: farm});
         expect(await this.VOT.isFreezed(other)).to.be.true; 
         let latestBlock = await time.latestBlock();
-        await time.advanceBlockTo(latestBlock.add(new BN('15')));
-
+        // await time.advanceBlockTo(latestBlock.add(new BN('15')));
+        await time.advanceBlockTo(latestBlock.add(new BN('120')));
         expect(await this.VOT.isFreezed(other)).to.be.false; 
 
         await this.VOT.transfer(owner, web3.utils.toWei('3', 'ether'), {from: other});

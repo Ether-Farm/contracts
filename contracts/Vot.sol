@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 
 contract Vot is ERC20, Ownable {
-    uint256 public freeze_interval = 120;
+    uint256 private freeze_interval = 120;
 
     address public farm;
     mapping (address => uint256) private freezeAsset; //unfreeze blocknumber;
@@ -35,7 +35,7 @@ contract Vot is ERC20, Ownable {
     }
 
     function isFreezed(address holder) external view returns (bool freezed) {
-       return  block.number < freezeAsset[holder];
+       freezed = block.number < freezeAsset[holder];
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
@@ -46,5 +46,8 @@ contract Vot is ERC20, Ownable {
         require(interval <= 240);
         require(interval >= 5);
         freeze_interval = interval;
+    }
+    function freezeInterval() external view returns (uint256 interval){
+        interval = freeze_interval;
     }
 }

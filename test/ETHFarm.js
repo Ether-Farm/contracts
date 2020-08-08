@@ -115,28 +115,28 @@ contract('ETHFarm', function (accounts) {
         expect(proposal['1']).to.be.bignumber.equal('0');
     })
 
-    it('vot a proposal', async function() {
-        const receptors = [receptor1, receptor2, receptor3];
+    // it('vot a proposal', async function() {
+    //     const receptors = [receptor1, receptor2, receptor3];
 
-        for(let i = 0; i< receptors.length; i++) {
-            await this.FETH.approve(this.ETHFarm.address, web3.utils.toWei('1', 'ether'), {from: receptors[i]})
-            await this.ETHFarm.deposit(web3.utils.toWei('1', 'ether'), {from: receptors[i]});
-        }
+    //     for(let i = 0; i< receptors.length; i++) {
+    //         await this.FETH.approve(this.ETHFarm.address, web3.utils.toWei('1', 'ether'), {from: receptors[i]})
+    //         await this.ETHFarm.deposit(web3.utils.toWei('1', 'ether'), {from: receptors[i]});
+    //     }
 
-        await this.ETHFarm.vote(proposal1, {from: receptor1});
+    //     await this.ETHFarm.vote(proposal1, {from: receptor1});
 
-        let proposal = await this.ETHFarm.getProposal(proposal1);
+    //     let proposal = await this.ETHFarm.getProposal(proposal1);
 
-        expect(proposal['0']).to.be.false;
-        expect(proposal['1']).to.be.bignumber.equal(web3.utils.toWei('1', 'ether'));
+    //     expect(proposal['0']).to.be.false;
+    //     expect(proposal['1']).to.be.bignumber.equal(web3.utils.toWei('1', 'ether'));
 
-        await this.ETHFarm.vote(proposal1, {from: receptor2});
+    //     await this.ETHFarm.vote(proposal1, {from: receptor2});
 
-        proposal = await this.ETHFarm.getProposal(proposal1);
+    //     proposal = await this.ETHFarm.getProposal(proposal1);
 
-        expect(proposal['0']).to.be.true;
-        expect(proposal['1']).to.be.bignumber.equal(web3.utils.toWei('2', 'ether'));
-    });
+    //     expect(proposal['0']).to.be.true;
+    //     expect(proposal['1']).to.be.bignumber.equal(web3.utils.toWei('2', 'ether'));
+    // });
 
     it('freeze asset after vot can not vote again', async function() {
 

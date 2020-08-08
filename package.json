@@ -21,7 +21,7 @@
   "scripts": {
     "coverage": "npx truffle run coverage",
     "test": "npx truffle test",
-    "compile": "npx oz compile --solc-version=0.6.8 --optimizer on"
+    "compile": "npx oz compile --solc-version=0.6.2 --optimizer on"
   },
   "author": "",
   "license": "ISC"

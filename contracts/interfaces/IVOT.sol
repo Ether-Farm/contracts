@@ -8,4 +8,5 @@ interface IVOT {
    function setFreezeInterval(uint256 interval) external;
    function totalSupply() external view returns (uint256);
    function balanceOf(address account) external view returns (uint256);
+   function freezeInterval() external view returns (uint256);
 }

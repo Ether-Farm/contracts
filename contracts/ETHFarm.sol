@@ -20,15 +20,21 @@ contract ETHFarm is ReentrancyGuard, Pausable {
         uint256 votes;
         uint256 expired;  //block number
     }
+    address[] public proposalIndex;
     uint256 public LOCK_INTERVAL = 120;
+    mapping (address => bool) private tempAuth;
     mapping (address => uint256) private freezeAsset; //unfreeze blocknumber;
     mapping (address => Proposal) public proposals;
     event Deposit(address holder, uint256 amount);
     event Withdraw(address holder, uint256 amount);
     event ProposalStatus(address proposalAddr, Proposal proposal);
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         require(owner == msg.sender, "Ownable: caller is not the owner");
+        _;
+    }
+    modifier onlyTempAuth() {
+        require(tempAuth[msg.sender], "Ownable: caller is not authorized");
         _;
     }
     constructor(IERC20 ETH, IVOT initVot) public {
@@ -38,7 +44,7 @@ contract ETHFarm is ReentrancyGuard, Pausable {
     }
 
     //deposit feth
-    function deposit(uint256 amountFETH) external nonReentrant returns (uint256 liquidity) {
+    function deposit(uint256 amountFETH) external nonReentrant whenNotPaused returns (uint256 liquidity) {
 
         if (vot.totalSupply() == 0) {
             liquidity = amountFETH;
@@ -75,39 +81,54 @@ contract ETHFarm is ReentrancyGuard, Pausable {
 
         //TODO save info
         require(!proposals[proposal].status, "proposal signed");
-        //TODO 是否过期
-
-        //TODO freeze token
+        require(proposals[proposal].votes == 0 || proposals[proposal].expired > block.number, "proposal expired");
+        
+        //vot shouldn't be freezed
         require(!vot.isFreezed(msg.sender), "asset is freezed");
 
         vot.freeze(msg.sender);
+        if (proposals[proposal].votes == 0) {
+            proposals[proposal].expired = block.number + vot.freezeInterval();
+            proposalIndex.push(proposal);
+        }
         proposals[proposal].votes = proposals[proposal].votes.add(vot.balanceOf(msg.sender));
         uint256 share = proposals[proposal].votes.mul(1e18).div(vot.totalSupply()); 
 
         if (share >= 66e16) {  //approve vote above 66% of total supply VOT
-        //临时授权
+
+            //open temp auth
+            tempAuth[proposal] = true;
             proposals[proposal].status = true;
+            //active proposal
             IProposal(proposal).active();
             emit ProposalStatus(proposal, proposals[proposal]);
-            //激活提案
-        //关闭临时授权
+
+            //close temp auth
+            tempAuth[proposal] = false;
         }
         // status = proposals[proposal].activaty;
         // votes = proposals[proposal].votes;
         //TODO is activated
     }
 
-
-    function getProposal(address proposal) external view returns (bool status, uint256 votes) {
-       status = proposals[proposal].status;
-       votes = proposals[proposal].votes; 
+    function getProposalNumber() external view returns (uint256 length) {
+        length = proposalIndex.length;
     }
-    function pause() external {
-        // require(proposals[proposal].activaty, "unactivated proposal");
+    function getProposalByIndex(uint256 index) external view returns (address proposal, bool status, uint256 votes, uint256 expired) {
+        proposal = proposalIndex[index];
+        status = proposals[proposal].status;
+        votes = proposals[proposal].votes; 
+        expired = proposals[proposal].expired;
+    }
+    function getProposal(address proposal) external view returns (bool status, uint256 votes, uint256 expired) {
+        status = proposals[proposal].status;
+        votes = proposals[proposal].votes; 
+        expired = proposals[proposal].expired;
+    }
+    function pause() external onlyTempAuth {
         _pause();
     }
-    function unpause() external {
-        // require(proposals[proposal].activaty, "unactivated proposal");
+    function unpause() external onlyTempAuth {
         _unpause();
     }
 }
