@@ -13,7 +13,7 @@ PauseDeposit: 0x9E1fBB60e621C5c425E3797c1bfd629bccCdC045   (已投票)
 CompoundDeposit: 0x67F6D1402de78C895f0D81d8a23c7ED97eB3ad0A （已投票）
 
                  0xC7aFf7c9e4e7CEDd169Dd657991C5BD778AcDE92  (未投票)
-                 
+
 cETH: 0x20572e4c090f15667cf7378e16fad2ea0e2f3eff 
 
 ## Teset report
@@ -56,7 +56,7 @@ function getProposal(address proposal) external view returns (bool status, uint2
 //amountFETH 投入的FETH数量, 投资人通过暂停投资的提案后无法投资。需要等待开启投资的提案通过后才能继续投资
 function deposit(uint256 amountFETH) external nonReentrant whenNotPaused returns (uint256 liquidity)
 ```
-### 4. 提现
+### 7. 提现
 ```javascript
 //amountVOT 要提现的VOT数量
 function withdraw(uint256 amountVOT) external nonReentrant returns (uint256 withdrawAmount)
