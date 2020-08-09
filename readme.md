@@ -16,7 +16,7 @@ CompoundDeposit: 0x67F6D1402de78C895f0D81d8a23c7ED97eB3ad0A （已投票）
 
                  0xC7aFf7c9e4e7CEDd169Dd657991C5BD778AcDE92  (已投票)
                  
-                 0x7070a707f3C412f0f0be27eA15c596201595105C  (已投票)
+                 0x7070a707f3C412f0f0be27eA15c596201595105C  (未投票)
 
 
 cETH: 0x20572e4c090f15667cf7378e16fad2ea0e2f3eff 
