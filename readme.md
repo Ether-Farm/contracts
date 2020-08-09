@@ -7,10 +7,13 @@ VOT: 0x4D3968Dc323340A8ef7De6e9d57B38858b1B425e
 Farm: 0x47a678419E9D55b47b66600f45A601791947a4b4
 
 PauseDeposit: 0x9E1fBB60e621C5c425E3797c1bfd629bccCdC045   (已投票)
+
               0xE9b1B43e48898eE01cC3E868a23aE55A4EF9b1Bd   (未投票)
 
 CompoundDeposit: 0x67F6D1402de78C895f0D81d8a23c7ED97eB3ad0A （已投票）
+
                  0xC7aFf7c9e4e7CEDd169Dd657991C5BD778AcDE92  (未投票)
+                 
 cETH: 0x20572e4c090f15667cf7378e16fad2ea0e2f3eff 
 
 ## Teset report
