@@ -136,19 +136,6 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "proposal",
-          "type": "address"
-        }
-      ],
-      "name": "closeCompound",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "amountFETH",
           "type": "uint256"
@@ -445,4 +432,4 @@
       "stateMutability": "payable",
       "type": "receive"
     }
-  ],
+  ]

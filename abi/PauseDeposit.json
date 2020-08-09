@@ -58,6 +58,19 @@
     },
     {
       "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "ethAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "status",
       "outputs": [
         {
@@ -67,6 +80,13 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unActive",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]
