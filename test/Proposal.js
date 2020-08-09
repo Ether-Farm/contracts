@@ -12,7 +12,7 @@ const FETH = artifacts.require('FETH');
 const VOT = artifacts.require('Vot');
 const ETHFarm = artifacts.require('ETHFarm');
 const Pause = artifacts.require('PauseDeposit');
-const Open = artifacts.require('OpenDeposit');
+// const Open = artifacts.require('OpenDeposit');
 const Compound = artifacts.require('CompoundDeposit');
 const MockCETH = artifacts.require('MockCETH');
 
@@ -38,17 +38,17 @@ contract('Proposal', function (accounts) {
             expect(await this.VOT.balanceOf(receptors[i])).to.be.bignumber.equal(web3.utils.toWei('1', 'ether'));
         }
         this.Pause = await Pause.new(this.ETHFarm.address, {from: owner});
-        this.Open = await Open.new(this.ETHFarm.address, {from: owner});
+        // this.Open = await Open.new(this.ETHFarm.address, {from: owner});
 
         this.MockCETH = await MockCETH.new({from: owner});
         this.Compound = await Compound.new(this.ETHFarm.address, this.FETH.address, this.MockCETH.address,{from: owner});
 
         expect(await this.Pause.farm()).to.equal(this.ETHFarm.address);
-        expect(await this.Open.farm()).to.equal(this.ETHFarm.address);
+        // expect(await this.Open.farm()).to.equal(this.ETHFarm.address);
         expect(await this.Compound.farm()).to.equal(this.ETHFarm.address);
 
         expect(await this.Pause.SUMMARY()).to.equal('proposal for pause farm deposit');
-        expect(await this.Open.SUMMARY()).to.equal('proposal for open farm deposit');
+        // expect(await this.Open.SUMMARY()).to.equal('proposal for open farm deposit');
         expect(await this.Compound.SUMMARY()).to.equal('proposal for deposit to compound');
         // await this.Compound.send(web3.utils.toWei("0.011","ether"), { from: owner });
     })
