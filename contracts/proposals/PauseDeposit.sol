@@ -16,8 +16,16 @@ contract PauseDeposit {
         _;
     }
 
+    function getBalance() external view returns (uint256 ethAmount) {
+        ethAmount = 0;   
+    }
     function active() external onlyFarm {
         farm.pause();
         status = true;
+    }
+
+    function unActive() external onlyFarm {
+        farm.unpause();
+        status = false;
     }
 }

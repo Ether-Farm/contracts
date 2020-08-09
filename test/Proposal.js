@@ -82,7 +82,7 @@ contract('Proposal', function (accounts) {
     })
 
     describe('open deposit proposal', function() {
-        it('vote to pause deposit', async function () {
+        it('vote to unactive pause deposit', async function () {
             //pause deposit first
             await this.ETHFarm.vote(this.Pause.address, {from: receptor1});
             await this.ETHFarm.vote(this.Pause.address, {from: receptor2});
@@ -91,16 +91,17 @@ contract('Proposal', function (accounts) {
             let latestBlock = await time.latestBlock();
             await time.advanceBlockTo(latestBlock.add(new BN('120')));
 
-            await this.ETHFarm.vote(this.Open.address, {from: receptor1});
-            await this.ETHFarm.vote(this.Open.address, {from: receptor2});
+            await this.ETHFarm.unActiveVot(this.Pause.address, {from: receptor1});
+            await this.ETHFarm.unActiveVot(this.Pause.address, {from: receptor2});
+
             expect(await this.ETHFarm.paused()).to.be.false;
 
-            expect(await this.ETHFarm.getProposalNumber()).to.be.bignumber.equal(new BN('2'));
+            expect(await this.ETHFarm.getProposalNumber()).to.be.bignumber.equal(new BN('1'));
             const pausProposal = await this.ETHFarm.getProposalByIndex(0);
             expect(pausProposal['0'].toString()).to.be.equal(this.Pause.address);
 
-            const openProposal = await this.ETHFarm.getProposalByIndex(1);
-            expect(openProposal['0'].toString()).to.be.equal(this.Open.address);
+            // const openProposal = await this.ETHFarm.getProposalByIndex(1);
+            // expect(openProposal['0'].toString()).to.be.equal(this.Open.address);
         })
 
     })

@@ -152,17 +152,19 @@ contract ETHFarm is ReentrancyGuard, Pausable {
         if (!proposals[proposal].unactive) {
             proposals[proposal].votes = 0; 
         }
+        vot.freeze(msg.sender);
 
         proposals[proposal].unactive = true;
         proposals[proposal].votes = proposals[proposal].votes.add(vot.balanceOf(msg.sender));
         uint256 share = proposals[proposal].votes.mul(1e18).div(vot.totalSupply()); 
 
         if (share >= 66e16) {  //approve vote above 66% of total supply VOT
-        
+            tempAuth[proposal] = true;
             proposals[proposal].status = false;
             proposals[proposal].votes = 0;
             proposals[proposal].expired = 0;
             IProposal(proposal).unActive();
+            tempAuth[proposal] = false;
         }
     }
 

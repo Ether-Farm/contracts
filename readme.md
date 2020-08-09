@@ -1,18 +1,17 @@
-## ropsten 
+## ropsten  goerli
 
-FETH: 0xAD3cD0e1762f91708AD648b84b690FA72fFe1BB9
+FETH: 0xa0Fb85Ce3D93DF300c607892b52383720Cd6770e
 
-VOT: 0x459a6165589a1F6C3c24F86DB4a27462cc880a31
+VOT: 0x4D3968Dc323340A8ef7De6e9d57B38858b1B425e
 
-Farm: 0x063bD7E568A822eE74fA6eA1Ee260bd0466ACF6D
+Farm: 0x47a678419E9D55b47b66600f45A601791947a4b4
 
-OpenDeposit: 0x22421128Cc378B94200A2C9Cc189c7dD18a12960 
+PauseDeposit: 0x9E1fBB60e621C5c425E3797c1bfd629bccCdC045   (已投票)
+              0xE9b1B43e48898eE01cC3E868a23aE55A4EF9b1Bd   (未投票)
 
-PauseDeposit: 0x8eB7AfD6E7F4eE7E6c5C947CE04A858a78E47dea
-
-CompoundDeposit: 0x09D9E1F952b2C38Ba4C49fC0a458ab5845f7F26c
-
-cETH: 0xbe839b6d93e3ea47effcca1f27841c917a8794f3
+CompoundDeposit: 0x67F6D1402de78C895f0D81d8a23c7ED97eB3ad0A （已投票）
+                 0xC7aFf7c9e4e7CEDd169Dd657991C5BD778AcDE92  (未投票)
+cETH: 0x20572e4c090f15667cf7378e16fad2ea0e2f3eff
 
 ## Teset report
 ![](./coverage/testreport.jpg)
@@ -68,3 +67,9 @@ uint256 public INVEST_ETH = 11e15;
 //合约提案摘要
 string public SUMMARY = "proposal for deposit to compound";
 ```
+通过compound投资提案：https://goerli.etherscan.io/tx/0x979d3ce8a35c115106f362bf36cd1ff6f87c1a126bb22f5b0eae03992faa2579
+
+投票后被锁定无法马上再次投票：https://goerli.etherscan.io/tx/0x016a162f8a8af39292ea84a2e355b3ee9127d2e3c3bd351d9089a8e4dd867aec
+
+关闭compound投资提案：https://goerli.etherscan.io/tx/0xace8c0c6a464689c37a081206b6e730bddf8261387828f930275a85a3846d1e4
+
